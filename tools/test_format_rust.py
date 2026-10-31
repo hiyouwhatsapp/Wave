@@ -247,8 +247,9 @@ class TestFormatRustRegressions(unittest.TestCase):
         ):
             with self.subTest(prefix=prefix):
                 source = f"{prefix} fn first() {{}}\n{prefix} fn second() {{}}\n"
-                expected = source.replace("fn second()", "fn second()")
-                expected = expected.replace(" {}\n" + prefix, " {}\n\n" + prefix, 1)
+                expected = source.replace(
+                    f"{prefix} fn second()", f"\n{prefix} fn second()", 1
+                )
                 self.assertEqual(
                     format_rust.function_ranges(source.splitlines(keepends=True)),
                     [(0, 0, 0), (1, 1, 0)],
